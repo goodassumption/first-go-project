@@ -6,28 +6,25 @@ import (
 	"log"
 	"net/http"
 
-	_ "github.com/mattn/go-sqlite3" // Драйвер для SQLite
+	_ "github.com/mattn/go-sqlite3"
 )
 
-// Item представляет структуру данных, которую мы храним в базе и передаем в JSON
 type Item struct {
-	ID   int    `json:"id"`   // Уникальный идентификатор, генерируется базой
-	Data string `json:"data"` // Поле для хранения текстовых данных
+	ID   int    `json:"id"`
+	Data string `json:"data"`
 }
 
-// Server содержит ссылку на базу данных, чтобы обработчики могли с ней работать
 type Server struct {
 	db *sql.DB
 }
 
-// initDB создает таблицу items, если она еще не существует
 func initDB(db *sql.DB) {
 	sql := `
 	CREATE TABLE IF NOT EXISTS items (
 		id INTEGER PRIMARY KEY AUTOINCREMENT,
 		data TEXT
 	);`
-	db.Exec(sql) // Выполняем SQL-запрос
+	db.Exec(sql)
 }
 
 // createItem обрабатывает POST-запросы для создания новой записи
@@ -44,7 +41,6 @@ func (s *Server) createItem(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(item)                    // Отправляем обратно созданный объект с его новым ID
 }
 
-// getItems обрабатывает GET-запросы и возвращает все записи
 func (s *Server) getItems(w http.ResponseWriter, r *http.Request) {
 	rows, _ := s.db.Query("SELECT id, data FROM items") // Выбираем все записи
 	defer rows.Close()                                  // Закрываем строки после завершения функции

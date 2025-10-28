@@ -13,49 +13,50 @@ def update_score(id, name, scr):
     
     try:
         response = requests.post(url, json=payload)
-        response.raise_for_status() 
-        
-        return response.json()
-            
     except requests.exceptions.RequestException as e:
-        return None, f"Ошибка при обновлении счета: {e}"
+        return None, f"Сетевая ошибка при обновлении счета: {e}"
+
+    if response.ok:
+        return response.json()
+    else:
+        return None, f"Ошибка сервера при обновлении счета: {response.status_code} {response.reason}"
+
 
 def get_leaderboard(limit=5):
     url = f"{SERVER_URL}/leaderboard?limit={limit}"
     
     try:
         response = requests.get(url)
-        response.raise_for_status()
-        
-        return response.json().get('entries', [])
-            
     except requests.exceptions.RequestException as e:
-        return None, f"Ошибка при получении рейтинга: {e}"
+        return None, f"Сетевая ошибка при получении рейтинга: {e}"
+    
+    if response.ok:
+        return response.json().get('entries', [])
+    else:
+        return None, f"Ошибка сервера при получении рейтинга: {response.status_code} {response.reason}"
 
 
-def plus_count():
-    return update_score(4, "user", 149)
+def plus_count(user_id, user_name):
+    return update_score(user_id, user_name, 1)
 
 if __name__ == '__main__':
     
+    try:
+        new_user_id = "test_user_" + str(int(requests.get(SERVER_URL + "/leaderboard").elapsed.total_seconds() * 1000000))
+    except requests.exceptions.RequestException:
+        print("Ошибка: Не удалось подключиться к серверу.")
+        exit()
+        
+    new_user_name = "{Name}"
     
-    """initial_alice = update_score("1", "Alice", 100)
-    initial_bob = update_score("2", "Bob", 150)
-    initial_charlie = update_score("3", "Charlie", 50)"""
+    initial_user_resp = update_score(new_user_id, new_user_name, 0)
+    
+    user_inc = plus_count(new_user_id, new_user_name)
     
     leaderboard_data = get_leaderboard()
     
-    id = str(len(leaderboard_data) + 1)
-    initial_user = update_score(4, "user", 0)
-
-    
-    user_inc_1 = plus_count()
-    
-    user_inc_2 = plus_count()
-    
-    
     if isinstance(leaderboard_data, list) and leaderboard_data:
         for entry in leaderboard_data:
-            print(f"{entry['Rank']}. {entry['Name']} {entry['Scr']}")
-    elif isinstance(leaderboard_data, tuple) and leaderboard_data[0] is None:
+            print(f"{entry['Rank']}. {entry['Name']} - {entry['Scr']}")
+    else:
         print(f"Ошибка получения рейтинга: {leaderboard_data[1]}")
