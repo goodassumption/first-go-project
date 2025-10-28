@@ -209,7 +209,7 @@ func main() {
 	http.HandleFunc("/score/update", s.updScr)
 	http.HandleFunc("/leaderboard", s.getLdr)
 
-	log.Printf("REST сервер запущен на порту %s", port)
+	log.Printf("сервер запущен на порту %s", port)
 	if err := http.ListenAndServe(port, nil); err != nil {
 		log.Fatalf("не удалось запустить сервер: %v", err)
 	}
