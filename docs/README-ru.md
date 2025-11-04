@@ -159,4 +159,4 @@ ProjectRoot
 
 ## Лицензия
 
-- Проект лицензирован MIT license
+- Проект лицензирован [MIT license](LICENSE-ru.md)
