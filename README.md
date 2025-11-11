@@ -28,6 +28,8 @@ ProjectRoot
 | ├── go.mod # Go dependencies (module)
 | ├── go.sum # Go dependency checksums
 | └── requirements.txt # Python client dependencies
+├── LICENCE.md
+├── README.md
 └── .gitignore # Git exceptions
 
 ```
