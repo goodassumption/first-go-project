@@ -15,4 +15,11 @@ venv.bak/
 
 *.sqlite
 
-*.exe
+*.
+
+# Папки сборки PyInstaller
+build/
+dist/
+
+# Файл спецификации PyInstaller
+*.spec
