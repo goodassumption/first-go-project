@@ -40,23 +40,26 @@ def plus_count(user_id, user_name):
     return update_score(user_id, user_name, 1)
 
 if __name__ == '__main__':
-    
     try:
-        new_user_id = "test_user_" + str(int(requests.get(SERVER_URL + "/leaderboard").elapsed.total_seconds() * 1000000))
-    except requests.exceptions.RequestException:
-        print("Ошибка: Не удалось подключиться к серверу.")
-        exit()
+        try:
+            new_user_id = "test_user_" + str(int(requests.get(SERVER_URL + "/leaderboard").elapsed.total_seconds() * 1000000))
+        except requests.exceptions.RequestException:
+            print("Ошибка: Не удалось подключиться к серверу.")
+            exit()
+            
+        new_user_name = "{Name}"
         
-    new_user_name = "{Name}"
-    
-    initial_user_resp = update_score(new_user_id, new_user_name, 0)
-    
-    user_inc = plus_count(new_user_id, new_user_name)
-    
-    leaderboard_data = get_leaderboard()
-    
-    if isinstance(leaderboard_data, list) and leaderboard_data:
-        for entry in leaderboard_data:
-            print(f"{entry['Rank']}. {entry['Name']} - {entry['Scr']}")
-    else:
-        print(f"Ошибка получения рейтинга: {leaderboard_data[1]}")
+        initial_user_resp = update_score(new_user_id, new_user_name, 0)
+        
+        user_inc = plus_count(new_user_id, new_user_name)
+        
+        leaderboard_data = get_leaderboard()
+        
+        if isinstance(leaderboard_data, list) and leaderboard_data:
+            for entry in leaderboard_data:
+                print(f"{entry['Rank']}. {entry['Name']} - {entry['Scr']}")
+        else:
+            print(f"Ошибка получения рейтинга: {leaderboard_data[1]}")
+
+    finally:
+        input("\nНажмите Enter для выхода...")
