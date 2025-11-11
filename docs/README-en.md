@@ -159,4 +159,4 @@ ProjectRoot
 
 ## License
 
-- The project is licensed under the MIT license
+- The project is licensed under the [GNU GPU v3 License](docs/LICENSE-en)

@@ -160,4 +160,4 @@ ProjectRoot
 
 ## Лицензия
 
-- Проект лицензирован [MIT license](LICENSE-ru.md)
+- Проект лицензирован лицензией [GNU GPL v3](LICENSE-ru)
