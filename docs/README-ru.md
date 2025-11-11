@@ -16,18 +16,19 @@
 ```text
 ProjectRoot
 ├── docs
-│   ├── LICENSE-en.md
-│   ├── LICENSE-ru.md
-|   ├── README-en.md
-│   └── README-ru.md
+│ ├── LICENSE-en.md
+│ ├── LICENSE-ru.md
+| ├── README-en.md
+│ └── README-ru.md
 ├── src
-|   ├── append_user.py        # Python-клиент: отправляет данные на сервер и читает leaderboard
-|   ├── main.go               # Go-сервер: обрабатывает запросы, работает с БД
-|   ├── go.mod                # зависимости Go (модуль)
-|   ├── go.sum                # контрольные суммы зависимостей Go
-|   └── requirements.txt      # зависимости Python-клиента
-└── .gitignore                # исключения для Git
-
+| ├── append_user.py # Python client: sends data to the server and reads the leaderboard
+| ├── main.go # Go server: handles requests, works with the database
+| ├── go.mod # Go dependencies (module)
+| ├── go.sum # Go dependency checksums
+| └── requirements.txt # Python client dependencies
+├── LICENCE.md
+├── README.md
+└── .gitignore # Git exceptions
 ```
 
 ## Как запустить
